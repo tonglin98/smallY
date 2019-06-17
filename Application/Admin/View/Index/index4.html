@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>京剧管理后台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/admin.css" media="all">
+
+    <script>
+        /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+    </script>
+    <style>
+        iframe{
+            display: block;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="http://www.layui.com/admin/" target="_blank" title="前台">
+                        <i class="layui-icon layui-icon-website"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a id="shuaxin" href="javascript:;"  title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                        <i class="layui-icon layui-icon-notice"></i>
+
+                        <!-- 如果有新消息，则显示小圆点 -->
+                        <span class="layui-badge-dot"></span>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="theme">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="note">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="fullscreen">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>贤心</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        <hr>
+                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="home/console.html">
+                    <span>京剧 1998</span>
+                </div>
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                    <foreach name="result" item="v" key="k">
+                        <li data-name="home" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="{$v.title}" lay-direction="2">
+                                <i class="layui-icon layui-icon-home"></i>
+                                <cite>{$v.title}</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <foreach name="v['child']" item="vv" key="kk">
+                                    <dd data-name="console" class="">
+                                        <a href="javascript:;" data-url="{$vv['path']}" class="site-demo-active" data-type="tabAdd" data-v="{$k}-{$kk}">{$vv["title"]}</a>
+                                    </dd>
+                               </foreach>
+                            </dl>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="demo" >
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="0"  class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+
+                </ul>
+                <!-- 主体内容 -->
+                <div class="layui-body layui-tab-content" id="LAY_app_body">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="{:U('Index/home')}" frameborder="0" class="layadmin-iframe"></iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery, layer = layui.layer;
+        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+            tabAdd: function(){
+                var url=$(this).data('url'); //获取访问地址
+                if(url!=null && url!=undefined && url!='') {
+                    if(url.substring(0,10)=="/index.php"){
+                        url=url.substring(10);
+                    }
+                    var id = $(this).attr("data-v");//获取id
+                    if ($(".layui-tab li[lay-id='" + id + "']").length < 1) { //判断该id对应的页面是否存在
+                        //不存在设置tab内容
+                        var str = ' <iframe id="i1" src="' + url + '" frameborder="0"  class="layui-anim layui-anim-upbit layadmin-iframe"  name="i1"></iframe>';
+                        //新增一个Tab项
+                        element.tabAdd('demo', {
+                            title: '<span>'+$(this).text()+'</span>' //设置tab标题
+                            , content: str
+                            , id: $(this).attr("data-v") //实际使用一般是规定好的id，这里以时间戳模拟下
+                        });
+                    }
+                    element.tabChange('demo', $(this).attr("data-v")); //选中当前tab
+                }
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', othis); //删除
+                othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(){
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+        //刷新当前页面
+        $("#shuaxin").click(function(){
+            $("body").find(".layui-show").find("iframe")[0].src=$("body").find(".layui-show").find("iframe")[0].src+"?num="+Math.random();
+        })
+    });
+
+
+</script>
+</body>
+</html>
+
+

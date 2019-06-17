@@ -1,0 +1,29 @@
+.public_upload_div{
+    border: 0px solid red;
+}
+.public_upload_div .layui-input-block{
+    position:static;
+    display: inline-block;
+    margin-left: 1px;
+    border: 0px solid red;
+    float: left;
+}
+.public_style{
+    display: inline-block;
+    border: 0px solid red;
+    margin-left: 5px;
+    float: left;
+    margin-left: 10px;
+    height:130px;
+    line-height:130px;
+}
+.public_style img{
+    height:130px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.public_style video{
+    margin-top: 5px;
+    margin-right: 5px;
+}
+

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>京剧管理后台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/admin.css" media="all">
+
+    <script>
+        /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+    </script>
+    <style>
+        iframe{
+            display: block;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body class="layui-layout-body" layadmin-themealias="red">
+
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="http://www.layui.com/admin/" target="_blank" title="前台">
+                        <i class="layui-icon layui-icon-website"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <li class="layui-nav-item" lay-unselect style="margin-right: 30px">
+                    <a href="javascript:;">
+                        <cite>欢迎您 {:session('name')}</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="loginOut" layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="home/console.html">
+                    <span>京剧 1998</span>
+                </div>
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                    <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>主页</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="layui-this">
+                                <a href="javascript:;" data-url="{:U('Index/bb')}" class="site-demo-active" data-type="tabAdd" data-v="0">控制台</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item ">
+                        <a href="javascript:;" lay-tips="商城信息" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>商城信息</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('PlayGoodsType/playGoodsTypeList')}" class="site-demo-active" data-type="tabAdd" data-v="111">商品分类</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('PlayGoods/playGoodsList')}" class="site-demo-active" data-type="tabAdd" data-v="1">商品列表</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('PlayGoodsOrder/playGoodsOrderList')}" class="site-demo-active" data-type="tabAdd" data-v="4">订单列表</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="京剧摄影" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>京剧摄影</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('OperaComboType/operaComboTypeList')}" class="site-demo-active" data-type="tabAdd" data-v="111">摄影套餐分类</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('OperaCombo/OperaComboList')}" class="site-demo-active" data-type="tabAdd" data-v="1">摄影套餐列表</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('OperaBrandInfo/operaBrandInfoAddUp')}" class="site-demo-active" data-type="tabAdd" data-v="1">品牌介绍</a>
+                            </dd>
+
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('OperaWorksType/operaWorksTypeList')}" class="site-demo-active" data-type="tabAdd" data-v="1">作品欣赏分类</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('OperaWorks/operaWorksList')}" class="site-demo-active" data-type="tabAdd" data-v="21">作品欣赏列表</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a href="javascript:;" data-url="{:U('OperaKnowledge/operaKnowledgeList')}" class="site-demo-active" data-type="tabAdd" data-v="211">京剧知识</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="演出服务" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>演出服务</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowAnnual/showAnnualList')}" class="site-demo-active" data-type="tabAdd" data-v="111">企业年会列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBroker/showBrokerList')}" class="site-demo-active" data-type="tabAdd" data-v="111">演员经纪列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowArtSong/showArtSongList')}" class="site-demo-active" data-type="tabAdd" data-v="111">曲艺列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowFilmsTelevision/showFilmsTelevisionList')}" class="site-demo-active" data-type="tabAdd" data-v="1211">影视服务列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBand/showBandList')}" class="site-demo-active" data-type="tabAdd" data-v="1211">乐队邀请列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBandProduction/showBandProductionList',['type'=>1])}" class="site-demo-active" data-type="tabAdd" data-v="121211">编曲作品列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBandBackground/showBandBackgroundAddUp',['type'=>1])}" class="site-demo-active" data-type="tabAdd" data-v="13211">配乐作品</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="租赁商城" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>租赁商城</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('RentGoodsType/rentGoodsTypeList')}" class="site-demo-active" data-type="tabAdd" data-v="111">商城分类</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('RentGoodsTypeParameter/rentGoodsTypeParameterList')}" class="site-demo-active" data-type="tabAdd" data-v="111">规格模板</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('RentGoods/rentGoodsList')}" class="site-demo-active" data-type="tabAdd" data-v="13311">商城列表</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="乐队伴奏" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>乐队伴奏</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('BandAria/bandAriaList')}" class="site-demo-active" data-type="tabAdd" data-v="33111">京剧唱段</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('BandAccompany/bandAccompanyList')}" class="site-demo-active" data-type="tabAdd" data-v="11441">伴奏</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('BandMusicScore/bandMusicScoreList')}" class="site-demo-active" data-type="tabAdd" data-v="1331441">曲谱</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('BandInvited/BandInvitedList')}" class="site-demo-active" data-type="tabAdd" data-v="133231441">乐队邀请</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBandProduction/showBandProductionList',['type'=>2])}" class="site-demo-active" data-type="tabAdd" data-v="121211">编曲作品列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('ShowBandBackground/showBandBackgroundAddUp',['type'=>2])}" class="site-demo-active" data-type="tabAdd" data-v="13211">配乐作品</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="国粹教育" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>国粹教育</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationTeacher/educationTeacherList')}" class="site-demo-active" data-type="tabAdd" data-v="3771">教师咨询</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationCounseling/educationCounselingList')}" class="site-demo-active" data-type="tabAdd" data-v="13771">教育咨询</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationCollectiveLesson/educationCollectiveLessonList')}" class="site-demo-active" data-type="tabAdd" data-v="23771">集体课</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationMajorLesson/educationMajorLessonList')}" class="site-demo-active" data-type="tabAdd" data-v="223771">专业课</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationOneLesson/educationOneLessonList')}" class="site-demo-active" data-type="tabAdd" data-v="28871">一对一</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationInheritLesson/educationInheritLessonList')}" class="site-demo-active" data-type="tabAdd" data-v="28871">京剧传承</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationConsult/educationConsultList')}" class="site-demo-active" data-type="tabAdd" data-v="29871">学校公告</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationAlumnus/educationAlumnusList')}" class="site-demo-active" data-type="tabAdd" data-v="29871">知名校友</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationLife/educationLifeList')}" class="site-demo-active" data-type="tabAdd" data-v="219871">师生生活</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationUserLeave/educationUserLeaveList')}" class="site-demo-active" data-type="tabAdd" data-v="219871">学生留言</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationOrganization/educationOrganizationAddUp')}" class="site-demo-active" data-type="tabAdd" data-v="219871">机构概况</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationBackgroundBanner/educationBackgroundBannerList')}" class="site-demo-active" data-type="tabAdd" data-v="219871">机构背景banner</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationRecruitStudent/educationRecruitStudentAddUp')}" class="site-demo-active" data-type="tabAdd" data-v="219871">机构背景招生信息</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationRegardsTalents/educationRegardsTalentsAddUp')}" class="site-demo-active" data-type="tabAdd" data-v="219871">人才招聘</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('EducationRegardsCredential/educationRegardsCredentialList')}" class="site-demo-active" data-type="tabAdd" data-v="219871">荣誉证书</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li data-name="home" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
+                            <i class="layui-icon layui-icon-home"></i>
+                            <cite>权限管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('Admin/AdminList')}" class="site-demo-active" data-type="tabAdd" data-v="3771">管理员列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('Role/roleList')}" class="site-demo-active" data-type="tabAdd" data-v="13771">角色列表</a>
+                            </dd>
+                            <dd data-name="console" class="">
+                                <a href="javascript:;" data-url="{:U('Privilege/privilegeList')}" class="site-demo-active" data-type="tabAdd" data-v="131771">权限列表</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav" >
+                    <li class="layui-nav-item" lay-unselect >
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein" style="z-index:999;">
+                            <dd class="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd class="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd class="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="demo" >
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="0"  class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+
+                </ul>
+                <!-- 主体内容 -->
+                <div class="layui-body layui-tab-content" id="LAY_app_body">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="{:U('Index/home')}" frameborder="0" class="layadmin-iframe"></iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery, layer = layui.layer;
+        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+            tabAdd: function(){
+                var url=$(this).data('url'); //获取访问地址
+                if(url!=null && url!=undefined && url!='') {
+                    if(url.substring(0,10)=="/index.php"){
+                        url=url.substring(10);
+                    }
+                    var id = $(this).attr("data-v");//获取id
+                    if ($(".layui-tab li[lay-id='" + id + "']").length < 1) { //判断该id对应的页面是否存在
+                        //不存在设置tab内容
+                        var str = ' <iframe id="i1" src="' + url + '" frameborder="0"  class="layui-anim layui-anim-upbit layadmin-iframe"  name="i1"></iframe>';
+                        //新增一个Tab项
+                        element.tabAdd('demo', {
+                            title: '<span>'+$(this).text()+'</span>' //设置tab标题
+                            , content: str
+                            , id: $(this).attr("data-v") //实际使用一般是规定好的id，这里以时间戳模拟下
+                        });
+                    }
+                    element.tabChange('demo', $(this).attr("data-v")); //选中当前tab
+                }
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', othis); //删除
+                othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(){
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+        //刷新
+        $(".layui-icon-refresh-3").click(function(){
+            var url=$("#LAY_app_body .layui-show").find("iframe")[0].src+"?rang="+Math.random();
+            $("#LAY_app_body .layui-show").find("iframe")[0].src=url;
+        });
+
+        //关闭当前
+        $("body .closeThisTabs").click(function(){
+            $("#LAY_app_tabsheader").find("li:eq(0)").siblings("li[class='layui-this']").remove();
+            $("#LAY_app_body").find("div:eq(0)").siblings("div .layui-show").remove();
+
+            $("#LAY_app_tabsheader").find("li:eq(0)").addClass("layui-this");
+            $("#LAY_app_body").find("div:eq(0)").addClass("layui-show");
+        });
+
+        //关闭其他
+        $("body .closeOtherTabs").click(function(){
+            $("#LAY_app_tabsheader").find("li:eq(0)").siblings("li:not([class='layui-this'])").remove();
+            $("#LAY_app_body").find("div:eq(0)").siblings("div:not(.layui-show)").remove();
+        });
+        //关闭所有
+        $("body .closeAllTabs").click(function(){
+            $("#LAY_app_tabsheader").find("li:not([lay-id='0'])").remove();
+            $("#LAY_app_tabsheader").find("li[lay-id='0']").addClass("layui-this");
+
+            $("#LAY_app_body").find("div").eq(0).addClass("layui-show");
+            $("#LAY_app_body").find("div:gt(0)").remove();
+        });
+
+        //退出登录
+
+        $("body .loginOut").click(function(){
+            window.location.href="{:U('Login/login')}";
+        });
+    });
+
+
+</script>
+</body>
+</html>
+
+
